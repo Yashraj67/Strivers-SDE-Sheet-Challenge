@@ -1,0 +1,20 @@
+#include <bits/stdc++.h>
+
+pair<int,int> missingAndRepeating(vector<int> &arr, int n)
+{
+	// Write your code here 
+	int ele = -1;
+	int sum = 0;
+	for(int i=0;i<n;i++){
+		
+			int a = abs(arr[i]);
+			if(arr[a-1]<0)  ele = a;
+			else arr[a-1] = -arr[a-1];
+			sum += a;
+	}
+	sum-=ele;
+	int totsum = (n*(n+1))/2;
+	int ele2 = totsum - sum;
+	return {ele2,ele};
+
+}
