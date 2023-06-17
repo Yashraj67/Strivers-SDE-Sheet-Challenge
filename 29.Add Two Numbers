@@ -1,0 +1,73 @@
+/**
+ * Definition of linked list:
+ *
+ * class Node {
+ * public:
+ *      int data;
+ *      Node *next;
+ *      Node() {
+ *          this->data = 0;
+ *          this->next = NULL;
+ *      }
+ *      Node(int data) {
+ *          this->data = data;
+ *          this->next = NULL;
+ *      }
+ *      Node (int data, Node *next) {
+ *          this->data = data;
+ *          this->next = next;
+ *      }
+ * };
+ *
+ *************************************************************************/
+
+Node *addTwoNumbers(Node *num1, Node *num2)
+{
+    // Write your code here.
+    if(num1==NULL) return num2;
+    if(num2==NULL) return num1;
+    Node* n = new Node(-1);
+    Node* ans = n;
+    Node* n1 = num1;
+    Node* n2 = num2;
+    int rem = -1;
+    while(n1!=NULL && n2!=NULL){
+        int sum = n1->data + n2->data;
+        int ele = 0;
+        if(rem==-1) ele = sum%10;
+        else ele = (rem+sum)%10;
+        if(rem==-1) rem = sum/10; 
+        else rem = (rem+sum)/10;
+        Node* nn = new Node(ele);
+        n->next = nn;
+        n = n->next;
+        n1 = n1->next;
+        n2 = n2->next;
+    }
+
+    while(n1!=NULL){
+        int sum = n1->data + rem;
+        rem = sum/10;
+        int ele = sum%10;
+        Node* nn = new Node(ele);
+        n->next = nn;
+        n = n->next;
+        n1 = n1->next;
+    }
+    while(n2!=NULL){
+        int sum = n2->data + rem;
+        rem = sum/10;
+        int ele = sum%10;
+        Node* nn = new Node(ele);
+        n->next = nn;
+        n = n->next;
+        n2 = n2->next;
+    }
+    if(rem!=0){
+        Node* nn = new Node(rem);
+        n->next = nn;
+        n = n->next;
+    }
+    return ans->next;
+
+}
