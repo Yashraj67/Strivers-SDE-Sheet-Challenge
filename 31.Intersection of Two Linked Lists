@@ -1,0 +1,10 @@
+Node* findIntersection(Node *l1, Node *l2)
+{
+    //Write your code here
+    Node *ptrA = l1, *ptrB = l2;
+    while (ptrA != ptrB) { 
+        ptrA = ptrA == NULL ? l2 : ptrA->next;
+        ptrB = ptrB == NULL ? l1 : ptrB->next; 
+	}
+	return ptrA;
+}
