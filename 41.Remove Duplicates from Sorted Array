@@ -1,0 +1,14 @@
+int removeDuplicates(vector<int> &arr, int n) {
+	// Write your code here.
+	int pt = 0;
+	int i=0;
+	while(i<n){
+		if(arr[pt]<arr[i]){
+			pt++;
+			swap(arr[i],arr[pt]);	
+		}
+		i++;
+	}
+
+	return pt+1;
+}
