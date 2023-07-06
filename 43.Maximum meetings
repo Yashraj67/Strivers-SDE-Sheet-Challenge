@@ -1,0 +1,25 @@
+#include <bits/stdc++.h> 
+vector<int> maximumMeetings(vector<int> &start, vector<int> &end) {
+    // Write your code here.
+    int n = start.size();
+    vector<vector<int>> all;
+    for(int i=0;i<n;i++){
+        all.push_back({end[i],i,start[i]});
+    }
+    sort(all.begin(),all.end());
+    
+    vector<int> ans;
+    ans.push_back(all[0][1]+1);
+    int backele = all[0][0];
+
+    for(int i=1;i<n;i++){
+        vector<int> v = all[i];
+        if(v[2]>backele ){
+           
+            ans.push_back(v[1]+1);
+            backele = v[0];
+        }
+    }
+
+    return ans;
+}
