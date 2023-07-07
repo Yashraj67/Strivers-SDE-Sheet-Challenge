@@ -1,0 +1,29 @@
+#include <bits/stdc++.h> 
+double maximumValue (vector<pair<int, int>>& items, int n, int w)
+{
+    // Write your code here.
+    // ITEMS contains {weight, value} pairs.
+    vector<pair<double,pair<int,int>>> v;
+    for(auto it:items){
+        int wei = it.first;
+        int val = it.second;
+        double r = static_cast<double>(wei)/static_cast<double>(val);
+        v.push_back({r,{val,wei}});
+    }
+
+    sort(v.begin(),v.end());
+    int i = 0;
+    double ans = 0;
+    
+        while(v[i].second.second<=w && i<n){
+            ans+=v[i].second.first;
+            w -= v[i].second.second;
+            i++;
+        }
+        if(w>0 && i<n){
+            double d =  (static_cast<double>(v[i].second.first))*(static_cast<double>(w)/static_cast<double>(v[i].second.second));
+            ans+=d;
+        }
+
+    return ans;
+}
