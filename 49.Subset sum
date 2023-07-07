@@ -1,0 +1,18 @@
+void f(int i,vector<int> &num,int sum,vector<int> &v){
+	if(i>=num.size()) return;
+
+	f(i+1,num,sum+num[i],v);
+	v.push_back(sum+num[i]);
+	f(i+1,num,sum,v);
+
+	return;
+}
+
+vector<int> subsetSum(vector<int> &num){
+	// Write your code here.
+	vector<int> ans;
+	ans.push_back(0);
+	f(0,num,0,ans);
+	sort(ans.begin(),ans.end());
+	return ans;
+}
