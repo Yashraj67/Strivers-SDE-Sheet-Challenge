@@ -1,0 +1,28 @@
+#include <bits/stdc++.h>
+
+
+string kthPermutation(int n, int k) {
+    // Write your code here.
+    vector<int> v;
+    int tot = 1;
+    for(int i=1;i<=n;i++){
+        v.push_back(i);
+        tot = tot*i;
+    }
+    string ans = "";
+    k--;
+    while(true)
+    {
+        int per_size = tot/v.size();
+        int ele = v[k/per_size];
+        ans+=to_string(ele);
+        v.erase(v.begin()+(k/per_size));
+        if(v.size()==0){
+            break;
+        }
+        k = k%per_size;
+        tot = per_size;
+    }
+
+    return ans;
+}
