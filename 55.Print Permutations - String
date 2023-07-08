@@ -1,0 +1,21 @@
+#include <bits/stdc++.h>
+void f(int i,vector<string> &v,string &s){
+    if(i==s.size()){
+        v.push_back(s);
+        return;
+    }
+
+    for(int j = i ; j<s.size() ; j++){
+        swap(s[i],s[j]);
+        f(i+1,v,s);
+        swap(s[i],s[j]);
+    }
+    
+    return ;
+}
+vector<string> findPermutations(string &s) {
+    // Write your code here.
+    vector<string> v;
+    f(0,v,s);
+    return v;
+}
