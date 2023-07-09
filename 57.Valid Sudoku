@@ -1,0 +1,46 @@
+#include <bits/stdc++.h>
+bool isPossible(int row,int col,int v,int matrix[9][9]){
+
+    
+
+    for(int i=0;i<9;i++){     
+        if(matrix[i][col]==v) return false;
+        if(matrix[row][i]==v) return false;
+        if(matrix[((3*(row/3))+(i/3))][(3*(col/3))+(i%3)]==v) return false;
+    }
+
+    return true;
+}
+
+bool f(int ind,int matrix[9][9],vector<pair<int,int>> &all){
+    if(ind==all.size()) return true;
+
+    int row = all[ind].first;
+    int col = all[ind].second;
+    for(int v = 1 ; v<=9 ; v++){
+        if(isPossible(row,col,v,matrix)){
+            matrix[row][col] = v;
+            if(f(ind+1,matrix,all)) return true;
+            else matrix[row][col] = 0;
+        }
+    }
+
+    return false;
+}
+
+bool isItSudoku(int matrix[9][9]) {
+    // Write your code here.
+    vector<pair<int,int>> all;
+    for(int i=0;i<9;i++){
+        for(int j=0;j<9;j++){
+            if(matrix[i][j]==0){
+                all.push_back({i,j});
+            }
+        }
+    }
+    
+     if (f(0, matrix, all))
+        return true;
+
+    return false;
+}
