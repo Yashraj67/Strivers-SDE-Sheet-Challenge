@@ -1,0 +1,46 @@
+#include <bits/stdc++.h>
+
+bool isPos(long long mid,vector<int> time,int n, int m){
+	int ct = 1;
+	long long ti = 0;
+	for(int i=0;i<m;i++){
+		if(time[i]>mid) return false;
+		else if(ti+time[i]>mid){
+			ct++;
+			ti = time[i];
+		}else{
+			ti+=time[i];
+		}
+	}
+
+	if(ct>n){
+		return false;
+	}
+
+	return true;
+}
+
+long long ayushGivesNinjatest(int n, int m, vector<int> time) 
+{	
+	// Write your code here.
+	long long high = 0;
+	int low1 = INT_MAX;
+	for(auto it:time){
+		high+=it;
+		low1 = min(low1,it);
+	}
+	long long low = low1;
+	long long res = -1;
+	while(low<=high){
+		long long mid = low+(high-low)/2;
+		if(isPos(mid,time,n,m)){
+			res = mid;
+			high = mid-1;
+		}
+		else{
+			low = mid+1;
+		}
+	}
+
+	return low;
+}
