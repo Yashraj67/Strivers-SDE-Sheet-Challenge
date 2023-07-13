@@ -1,0 +1,40 @@
+#include <bits/stdc++.h>
+void findMedian(int *arr, int n)
+{
+    // Write your code here
+    priority_queue<int> pqMax;
+    priority_queue<int,vector<int>, greater<int>> pqMin;
+
+    int i = 0;
+    pqMax.push(arr[0]);
+
+    while(i<n){
+        int med = -1;
+        if(i%2==0){
+            med = pqMax.top();
+            cout<<pqMax.top()<<" ";
+        }else{
+            med = (pqMax.top()+pqMin.top())/2;
+            cout<<med<<" ";
+        }
+        i++;
+        if(arr[i]<=med){
+            pqMax.push(arr[i]);
+            if((i+1)%2==0 && pqMax.size()>pqMin.size()){
+                int ele = pqMax.top();
+                pqMax.pop();
+                pqMin.push(ele);
+            }
+        }else{
+            pqMin.push(arr[i]);
+            if((i+1)%2==1 && pqMax.size()<pqMin.size()){
+                int ele = pqMin.top();
+                pqMin.pop();
+                pqMax.push(ele);
+            }
+        }
+        
+    }
+
+    
+}
