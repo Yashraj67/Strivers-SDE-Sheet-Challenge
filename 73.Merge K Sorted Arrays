@@ -1,0 +1,20 @@
+#include <bits/stdc++.h> 
+vector<int> mergeKSortedArrays(vector<vector<int>>&kArrays, int k)
+{
+    // Write your code here. 
+    vector<int> ans;
+    priority_queue<int,vector<int>,greater<int>> pq;
+    for(auto it:kArrays){
+        for(auto a:it){
+            pq.push(a);
+        }
+    }
+
+    while(pq.size()>0){
+        ans.push_back(pq.top());
+        pq.pop();
+    }
+
+    return ans;
+
+}
