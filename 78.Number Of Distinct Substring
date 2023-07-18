@@ -1,0 +1,34 @@
+#include <bits/stdc++.h> 
+
+struct Node{
+    Node* arr[26];
+    void addNode(char c,Node* n){
+        arr[c-'a'] = n;
+    }
+
+    bool isContains(char c){
+        return arr[c-'a']!=NULL;
+    }
+
+    Node* get(char c){
+        return arr[c-'a'];
+    }
+};
+
+int distinctSubstring(string &word) {
+    //  Write your code here.
+    Node* root = new Node();
+    int ct = 0;
+    for(int i=0;i<word.size();i++){
+        Node* n = root;
+        for(int j=i;j<word.size();j++){
+            if(!n->isContains(word[j])){
+                n->addNode(word[j],new Node());
+                ct++;
+            }
+            n = n->get(word[j]);
+        }
+    }
+
+    return ct;
+}
