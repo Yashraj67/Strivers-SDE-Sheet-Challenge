@@ -1,0 +1,97 @@
+#include <bits/stdc++.h> 
+struct Node{
+    Node* arr[26];
+    int prefix = 0;
+    int endct = 0;
+
+    bool isPresent(char c){
+        return arr[c-'a']!=NULL;
+    }
+
+    void addNode(char c,Node* n){
+        arr[c-'a'] = n;
+    }
+
+    void addPref(){
+        prefix++;
+    }
+
+    void endctn(){
+        endct++;
+    }
+
+    Node* get(char c){
+        return arr[c-'a'];
+    }
+};
+
+class Trie{
+    public:
+    Node* root;
+    
+    Trie(){
+        root = new Node();
+    }
+
+    void insert(string s){
+        Node* n = root;
+        for(int i=0;i<s.size();i++){
+            if(!n->isPresent(s[i])){
+                n->addNode(s[i],new Node());
+            }
+            n->addPref();
+            n = n->get(s[i]);
+        }
+        n->endctn();
+    }
+
+    bool isStringPresent(string s){
+        Node* n = root;
+        for(int i=0;i<s.size();i++){
+            if(n->isPresent(s[i])){
+                n = n->get(s[i]);
+            }else{
+                return false;
+            }
+        }
+        if(n->endct>0)
+            return true;
+        return false;    
+    }
+
+};
+
+string completeString(int n, vector<string> &a){
+    // Write your code here.
+    Trie* t = new Trie();
+    for(int i=0;i<n;i++){
+        t->insert(a[i]);
+    }
+    map<string,int> mp;
+    for(auto it:a){
+        string s = "";
+        int f = 1;
+        for(int i=0;i<it.size();i++){
+            s+=it[i];
+            if(mp.find(s)==mp.end() && !t->isStringPresent(s)){
+                f = 0;
+                break;
+            }
+        }
+        if(f) mp[it] = it.size();
+    }
+    int maxi = 0;
+    string ans;
+    for(auto it:mp){
+        string s = it.first;
+        int a = it.second;
+        if(maxi<a){
+            maxi = a;
+            ans = s;
+        }
+    }
+
+    if(ans.size()>0) return ans;
+
+    return "None";
+}
