@@ -22,4 +22,25 @@ vector<vector<int>> pwset(vector<int>v)
     vector<int> a;
     f(0,v,ans,a);
     return ans;
+
+    //approach using bit manupilation
+    vector<string> AllPossibleStrings(string s){
+		    // Code here
+		    
+		    int n = s.size();
+		    int p = pow(2,n);
+		    vector<string> v;
+		    for(int i=0;i<p;i++){
+		        string a = "";
+		        for(int j=0;j<n;j++){
+		            if(i & (1<<j)){
+		                a+=s[j];
+		            }
+		        }
+		        if(a!="") v.push_back(a);
+		    }
+		    sort(v.begin(),v.end());
+		    return v;
+		    
+	}
 }
