@@ -1,0 +1,25 @@
+#include <bits/stdc++.h>
+
+void f(int ind,vector<int> &v,vector<vector<int>> &ans,vector<int> &a){
+    if(ind==v.size()){
+        ans.push_back(a);
+        return;
+    }
+
+    a.push_back(v[ind]);
+    f(ind+1,v,ans,a);
+    a.pop_back();
+    f(ind+1,v,ans,a);
+
+    return;
+}           
+
+vector<vector<int>> pwset(vector<int>v)
+{
+    //Write your code here
+    
+    vector<vector<int>> ans;
+    vector<int> a;
+    f(0,v,ans,a);
+    return ans;
+}
