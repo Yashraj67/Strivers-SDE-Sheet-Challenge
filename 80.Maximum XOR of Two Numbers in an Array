@@ -1,0 +1,73 @@
+#include <bits/stdc++.h>
+
+struct Node{
+    Node* arr[2];
+
+    bool isContains(int i){
+        return arr[i]!=NULL;
+    }
+
+    Node* get(int i){
+        return arr[i];
+    }
+
+    void putNode(int i,Node* n){
+        arr[i] = n;
+    }
+};
+
+class Trie{
+    private:
+        Node* root;
+        
+    public:
+        Trie(){
+            root = new Node();
+        }
+
+        void insert(int num){
+            Node* n = root;
+            for(int i=31;i>=0;i--){
+                int bit = num>>i & 1;
+
+                if(!n->isContains(bit)){
+                    n->putNode(bit,new Node());
+                }
+
+                n = n->get(bit);
+            }
+        }
+
+        int getMax(int num){
+            Node* n = root;
+            int max = 0;
+            for(int i=31;i>=0;i--){
+                int bit = num>>i & 1;
+                if(n->isContains(1-bit)){
+                    max = max | (1<<i);
+                    n = n->get(1-bit);
+                }
+                else{
+                    n = n->get(bit);
+                }
+            }
+
+            return max;
+        }    
+};
+
+int maximumXor(vector<int> A)
+{
+    // Write your code here.
+    Trie* T = new Trie();
+    for(auto it : A) T->insert(it);
+
+    int maxi = 0;
+
+    for(auto it:A){
+        maxi = max(maxi,T->getMax(it));
+    } 
+
+    return maxi;
+    
+}
