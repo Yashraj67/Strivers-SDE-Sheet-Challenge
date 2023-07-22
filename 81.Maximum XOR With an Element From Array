@@ -1,0 +1,92 @@
+#include <bits/stdc++.h>
+
+struct Node{
+    Node* arr[2];
+
+    bool isContains(int i){
+        return arr[i]!=NULL;
+    }
+
+    Node* get(int i){
+        return arr[i];
+    }
+
+    void putNode(int i,Node* n){
+        arr[i] = n;
+    }
+};
+
+class Trie{
+    private:
+        Node* root;
+        
+    public:
+        Trie(){
+            root = new Node();
+        }
+
+        void insert(int num){
+            Node* n = root;
+            for(int i=31;i>=0;i--){
+                int bit = num>>i & 1;
+
+                if(!n->isContains(bit)){
+                    n->putNode(bit,new Node());
+                }
+
+                n = n->get(bit);
+            }
+        }
+
+        int getMax(int num){
+            Node* n = root;
+            int max = 0;
+            for(int i=31;i>=0;i--){
+                int bit = num>>i & 1;
+                if(n->isContains(1-bit)){
+                    max = max | (1<<i);
+                    n = n->get(1-bit);
+                }
+                else{
+                    n = n->get(bit);
+                }
+            }
+
+            return max;
+        }    
+};
+
+vector<int> maxXorQueries(vector<int> &arr, vector<vector<int>> &qu){
+	//	Write your coode here.
+	Trie* T = new Trie();
+	sort(arr.begin(),arr.end());
+	vector<vector<int>> q;
+	for(int i=0;i<qu.size();i++){
+		q.push_back({qu[i][1],qu[i][0],i});
+	}
+
+	sort(q.begin(),q.end());
+
+	int i = 0;
+	int qn = 0;
+	vector<int> ans(qu.size(),0);
+	for(int j = 0;j<qu.size();j++){
+		int x = q[j][1];
+		int limit = q[j][0];
+		int ind = q[j][2];
+
+		while(i<arr.size() && arr[i]<=limit){
+			T->insert(arr[i]);
+			i++;
+		}
+        if(i!=0){
+            int maxi = T->getMax(x);
+		    ans[ind] = maxi;
+        }else{
+            ans[ind] = -1;
+        }
+		
+	}
+
+	return ans;
+}
