@@ -1,0 +1,62 @@
+class Queue {
+    // Define the data members(if any) here.
+    stack<int> s1;
+    stack<int> s2;
+
+    public:
+    Queue() {
+        // Initialize your data structure here.
+    }
+
+    void enQueue(int val) {
+        // Implement the enqueue() function.
+        s1.push(val);
+    }
+
+    int deQueue() {
+        // Implement the dequeue() function.
+
+        if(s1.size()==0 && s2.size()==0) return -1;
+
+        if(s2.size()>0){
+            int ans = s2.top();
+            s2.pop();
+            return ans;
+        }
+
+        while(!s1.empty()){
+            int a = s1.top();
+            s2.push(a);
+            s1.pop();
+        }
+        int ans = s2.top();
+        s2.pop();
+        return ans; 
+    }
+
+    int peek() {
+        // Implement the peek() function here.
+        if(s1.size()==0 && s2.size()==0) return -1;
+
+        if(s2.size()>0){
+            int ans = s2.top();
+            return ans;
+        }
+
+        while(!s1.empty()){
+            int a = s1.top();
+            s2.push(a);
+            s1.pop();
+        }
+        int ans = s2.top();
+        return ans; 
+    }
+
+    bool isEmpty() {
+        // Implement the isEmpty() function here.
+
+        if(s1.size()==0 && s2.size()==0) return true;
+
+        return false;
+    }
+};
