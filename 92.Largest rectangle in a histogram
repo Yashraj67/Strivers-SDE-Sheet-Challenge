@@ -1,0 +1,28 @@
+ #include<bits/stdc++.h>
+
+ int largestRectangle(vector < int > & heights) {
+   // Write your code here.
+  stack<pair<int,int>> s;
+  int maxi = 0;
+  int n = heights.size();
+  for(int i= 0;i<=n;i++){
+
+    while(!s.empty() && (i==n || s.top().second>=heights[i])){
+      int rs = i;
+      int h = s.top().second;
+      s.pop();
+      int ls = -1;
+      if(s.size()!=0) ls = s.top().first;
+
+      int wid = rs-ls-1;
+      maxi = max(maxi,wid*h);
+
+    }
+
+    s.push({i,heights[i]});
+
+  }
+
+  return maxi;
+
+ }
