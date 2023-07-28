@@ -1,0 +1,21 @@
+vector<int> fun(vector<int> &nums,int k){
+
+    vector<int> v;
+    deque<int> d;
+    int n = nums.size();
+    for(int i=0;i<n;i++){
+        if(!d.empty() && d.back()<=i-k){
+            d.pop_back();
+        }
+        while(!d.empty() &&  nums[d.front()]<nums[i]){
+            d.pop_front();
+        }
+        d.push_front(i);
+        if(i+1>=k){
+            v.push_back(nums[d.back()]);
+        }
+    }
+
+    return v;
+
+}
