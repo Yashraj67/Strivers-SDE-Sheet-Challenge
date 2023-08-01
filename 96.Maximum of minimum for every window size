@@ -1,0 +1,27 @@
+#include <bits/stdc++.h> 
+vector<int> maxMinWindow(vector<int> a, int n) {
+    // Write your code here.
+
+    vector<int> v(n,INT_MIN);
+    stack<int> st;
+    for(int i=0;i<=n;i++){
+
+        while(!st.empty() && (i==n || a[i]<=a[st.top()])){
+            int ind = st.top();
+            st.pop();
+            int rind = i;
+            int lind = -1;
+            if(!st.empty()) lind =  st.top();
+
+            int diff = rind-lind-1;
+            v[diff-1] = max(v[diff-1],a[ind]);
+        }
+        st.push(i);
+
+    }
+    
+    for(int i=n-2; i>=0; i--){
+        v[i] = max(v[i], v[i+1]); // Update with the maximum values from the right to fill unset values
+    }
+    return v;
+}
